@@ -25,14 +25,14 @@ public class Game {
     private int minPlayers;
     public boolean endGame;
 
-    public Game(int port) {
+    public Game(int port, int maxPlayers) {
 
         this.port = port;
         this.playersList = new ArrayList<>();
         this.turn = false;
         this.gameRules = new HashMap<>();
         this.art = new ACIIArt();
-        this.maxPlayers = 10;
+        this.maxPlayers = maxPlayers;
         this.minPlayers = 0;
 
         gameRules.put(5, new Rule(20, Messages.HOUSE_5));

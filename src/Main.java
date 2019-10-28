@@ -13,7 +13,7 @@ public class Main {
         System.out.println("Set limit of players");
         int players = scanner.nextInt();
 
-        Game game = new Game(port);
+        Game game = new Game(port, players);
         game.listen();
 
     }
