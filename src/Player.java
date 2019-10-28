@@ -58,6 +58,7 @@ public class Player implements Runnable {
                     // TODO: 10/28/2019 broadcast do ascii art dos dados 
                     // TODO: 10/28/2019 fazer turnos
                     // TODO: 10/28/2019 mensagem de YouLost aparece no player que vence
+
                     broadcastMessage(art.yourTurn() + "\n");
                     broadcastMessage("\nPress R to roll the dice, " + name + ". \n");
                     System.out.println("Press R to roll the dice");

@@ -66,7 +66,9 @@ public class Game {
                 playersList.add(player);
                 pool.submit(player);
                 minPlayers++;
+                broadcast("\n");
                 broadcast(player, art.welcome());
+                broadcast(Messages.INICIO + "\n");
             }
 
             start();

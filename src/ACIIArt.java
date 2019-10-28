@@ -43,17 +43,17 @@ public class ACIIArt {
                 "\n"+
                 "============================================================================\n"+
                 "=                                                                          =\n"+
-                "=                           Save the Princess Game                         =\n"+
+                "=                             Save the Princess                            =\n"+
                 "=                                                                          =\n"+
-                "=                     Reach the end position before anyone else            =\n"+
-                "=                            Believe in the luck of the dice               =\n"+
+                "=                  Reach the end position before anyone else               =\n"+
+                "=                       Believe in the luck of the dice                    =\n"+
                 "=                                                                          =\n"+
-                "=                                  HOW TO PLAY                             =\n"+
-                "=                   - Just type 'r' and pray to someone that               =\n"+
-                "=                    that you don't hit any traps and move on!             =\n"+
-                "=                -You can also type /name to personalize your user         =\n"+
+                "=                               HOW TO PLAY                                =\n"+
+                "=                 - Just type 'r' and pray to someone that                 =\n"+
+                "=                  that you don't hit any traps and move on!               =\n"+
+                "=             -You can also type /name to personalize your user            =\n"+
                 "============================================================================\n"+
-                "                       Be a brave Knight and wait a second                  \n";
+                "                     Be a brave Knight and wait a second                    \n";
     }
 
     public static String yourTurn() {
