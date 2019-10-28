@@ -49,9 +49,9 @@ public class ACIIArt {
                 "=                            Believe in the luck of the dice               =\n"+
                 "=                                                                          =\n"+
                 "=                                  HOW TO PLAY                             =\n"+
-                "=                   - Just press 'R' and pray to someone that              =\n"+
-                "=                          that you don't hit any traps                    =\n"+
-                "=                                                                          =\n"+
+                "=                   - Just type 'r' and pray to someone that               =\n"+
+                "=                    that you don't hit any traps and move on!             =\n"+
+                "=                -You can also type /name to personalize your user         =\n"+
                 "============================================================================\n"+
                 "                       Be a brave Knight and wait a second                  \n";
     }
