@@ -18,8 +18,6 @@ The players should then connect to the server with netcat:
 # How-to play
 - Just /roll the dice, the first player to reach the final house wins!
 
-# ScreenShots
-
 # Credits
 - Vitor Correia;
 - Tiago Azevedo;
