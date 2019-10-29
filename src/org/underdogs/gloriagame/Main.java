@@ -1,3 +1,5 @@
+package org.underdogs.gloriagame;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -7,11 +9,11 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Introduce port number");
-        int port = scanner.nextInt();
+        //ystem.out.println("Introduce port number");
+        int port = 5050;//scanner.nextInt();
 
-        System.out.println("Set limit of players");
-        int players = scanner.nextInt();
+        //System.out.println("Set limit of players");
+        int players = 3; //scanner.nextInt();
 
         Game game = new Game(port, players);
         game.listen();

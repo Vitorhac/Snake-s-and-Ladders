@@ -1,3 +1,5 @@
+package org.underdogs.gloriagame;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -64,21 +66,33 @@ public class Game {
                 Socket socket = serverSocket.accept();
                 Player player = new Player(this, socket);
                 playersList.add(player);
-                pool.submit(player);
                 minPlayers++;
-                broadcast("\n");
-                broadcast(player, art.welcome());
-                broadcast(Messages.INICIO + "\n");
+
+                send(player, art.welcome());
+                send(player,Messages.INICIO + "\n");
             }
 
-            start();
+            addPlayersToPool(playersList, pool);
+
+            while (!endGame){
+                start();
+            }
+            broadcast(art.defeat());
+
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void broadcast(Player player, String message){
+    private void addPlayersToPool(List<Player> playersList, ExecutorService pool) {
+        for (Player player: playersList) {
+            pool.submit(player);
+        }
+    }
+
+    public synchronized void send(Player player, String message){
+
         if (playersList.contains(player)){
 
             DataOutputStream outMessage = null;
@@ -93,7 +107,7 @@ public class Game {
         }
     }
 
-    public void broadcast(Player player, int position){
+    public synchronized void broadcast(Player player, int position){
         if (playersList.contains(player)){
 
             DataOutputStream outMessage = null;
@@ -108,7 +122,7 @@ public class Game {
         }
     }
 
-    public void broadcast(String message) {
+    public synchronized void broadcast(String message) {
         for (Player players : playersList) {
 
             DataOutputStream outMessage = null;
@@ -131,17 +145,21 @@ public class Game {
     }
 
 
-    public void start() {
-        broadcast(art.welcome());
+    public void start() throws IOException {
+        // TODO: 28/10/2019 jogadores  acumulam inputs. if ready?boolean
+        for (Player player: playersList) {
+            System.out.println("question asked to player " + player.getName());
+            player.askQuestion();
+        }
     }
 
-    public int checkPosition(int position) {
+    public int checkPosition(Player player, int position) {
 
         for (Map.Entry<Integer, Rule> entry : gameRules.entrySet()) {
             if (entry.getKey() == position) {
-                broadcast("\n" + entry.getValue().getMessage() + "\n");
+                send(player,"\n" + entry.getValue().getMessage() + "\n");
                 //broadcast(player, entry.getValue().getMessage());
-                System.out.println("You hit a special place on Earth. Your new position is " + entry.getValue().getNewPosition());
+                //System.out.println("You hit a special place on Earth. Your new position is " + entry.getValue().getNewPosition());
                 return entry.getValue().getNewPosition();
             }
         }
@@ -151,7 +169,7 @@ public class Game {
     public void checkVictory(Player player, int position) {
 
         if (position == WIN_CONDITION || position > WIN_CONDITION) {
-            broadcast(player, art.victory());
+            send(player, art.victory());
             minPlayers = 0;
             try {
                 serverSocket.close();

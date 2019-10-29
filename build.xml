@@ -1,12 +1,12 @@
 <?xml version="1.0" ?>
 
-<project name="jogodagloria" default="jarfile">
+<project name="Snake-s-and-Ladders" default="jarfile">
 
     <!-- Initialize build properties  -->
     <target name="init" description="Initializes properties">
-        <property name="project.name" value="Snake-sand-Ladders" />
-        <property name="src.dir" value="src" />
-        <property name="main.class" value="src.Main" />
+        <property name="project.name" value="Snake-s-and-Ladders" />
+        <property name="src.dir" value="src/org/underdogs/gloriagame" />
+        <property name="main.class" value="org/underdogs/gloriagame/Main" />
         <property name="build.dir" value="build" />
         <property name="classes.dir" value="${build.dir}/classes" />
         <property name="lib.dir" value="lib" />

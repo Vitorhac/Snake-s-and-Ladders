@@ -1,4 +1,7 @@
+package org.underdogs.gloriagame;
+
 import org.academiadecodigo.bootcamp.Prompt;
+import org.academiadecodigo.bootcamp.scanners.string.StringInputScanner;
 
 import java.io.*;
 import java.net.Socket;
@@ -14,6 +17,7 @@ public class Player implements Runnable {
     private int position;
     private ACIIArt art;
     private Messages message;
+    private BufferedReader userInputStream;
 
     Player(Game game, Socket clientSocket) {
         this.game = game;
@@ -38,45 +42,49 @@ public class Player implements Runnable {
 
         start();
         this.name = setName();
+        try {
+            this.userInputStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        BufferedReader userInputStream = null;
+
+    }
+
+    public void askQuestion() throws IOException {
+
         String message = "";
 
-        while (!clientSocket.isClosed()) {
-            synchronized (this) {
-                try {
-                    userInputStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                    if ((message = userInputStream.readLine()) == null) {
-                        exit();
-                        return;
-                    }
+        if (!clientSocket.isClosed()) {
 
-                    if (game.endGame) {
-                        broadcastMessage(art.defeat());
-                        exit();
-                    }
-                    // TODO: 10/28/2019 broadcast do ascii art dos dados 
-                    // TODO: 10/28/2019 fazer turnos
-                    // TODO: 10/28/2019 mensagem de YouLost aparece no player que vence
+                // TODO: 10/28/2019 broadcast do ascii art dos dados
+                // TODO: 10/28/2019 fazer turnos
+                // TODO: 10/28/2019 mensagem de YouLost aparece no player que vence
 
-                    broadcastMessage(art.yourTurn() + "\n");
-                    broadcastMessage("\nPress R to roll the dice, " + name + ". \n");
-                    System.out.println("Press R to roll the dice");
-                    getPlayerInput(message);
+                /*send(art.yourTurn() + "\n");
+                send("\nPress R to roll the dice, " + name + ". \n");
+                //System.out.println("Press R to roll the dice");
 
-                    int newPosition = game.checkPosition(position);
-                    position = newPosition;
-                    broadcastMessage("\n" + "You are now in the House Number : " + newPosition + "\n" +
-                            "Now just wait 5 seconds please ok?" + "\n");
-                    System.out.println(newPosition);
-                    System.out.println("Your position is now: " + newPosition);
-                    //broadcastMessage(newPosition);
-                    game.checkVictory(this, position);
+                message = userInputStream.readLine();
+                getPlayerInput(message);*/
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+                StringInputScanner question = new StringInputScanner();
+                question.setMessage("\nPress R to roll the dice, " + name + ". \n");
+                message = prompt.getUserInput(question);
+                getPlayerInput(message);
+
+
+                int newPosition = game.checkPosition(this, position);
+                position = newPosition;
+                send("\n" + "You are now in the House Number : " + newPosition + "\n" +
+                        "Now just wait 5 seconds please ok?" + "\n");
+                //System.out.println(newPosition);
+                //System.out.println("Your position is now: " + newPosition);
+                //send(newPosition);
+                game.checkVictory(this, position);
+
+
+
         }
     }
 
@@ -88,30 +96,30 @@ public class Player implements Runnable {
         int diceNumber = (int) (Math.ceil(Math.random() * 6));
         /*
         if (diceNumber == 1){
-            broadcastMessage(art.dice1());
+            send(art.dice1());
         }
         if (diceNumber == 2){
-            broadcastMessage(art.dice2());
+            send(art.dice2());
         }
         if (diceNumber == 3){
-            broadcastMessage(art.dice3());
+            send(art.dice3());
         }
         if (diceNumber == 4){
-            broadcastMessage(art.dice4());
+            send(art.dice4());
         }
         if (diceNumber == 5){
-            broadcastMessage(art.dice5());
+            send(art.dice5());
         }
         if (diceNumber == 6){
-            broadcastMessage(art.dice6());
+            send(art.dice6());
         }
 
          */
 
         position += diceNumber;
-        broadcastMessage("You rolled a: " + diceNumber + "\n");
-        System.out.println("You rolled a " + diceNumber);
-        System.out.println(position);
+        send("You rolled a: " + diceNumber + "\n");
+        //System.out.println("You rolled a " + diceNumber);
+        //System.out.println(position);
         return diceNumber;
     }
 
@@ -133,16 +141,16 @@ public class Player implements Runnable {
         }
         if (message.startsWith("/name")) {
             String newName = message.substring(5);
-            System.out.println(name + " changed his name to " + newName);
+            //System.out.println(name + " changed his name to " + newName);
             changeName(newName);
         }
     }
 
-    public void broadcastMessage(String message) {
-        game.broadcast(this, message);
+    public void send(String message) {
+        game.send(this, message);
     }
 
-    public void broadcastMessage(int position) {
+    public void send(int position) {
         game.broadcast(this, position);
     }
 
@@ -160,5 +168,9 @@ public class Player implements Runnable {
 
     public Socket getClientSocket() {
         return clientSocket;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

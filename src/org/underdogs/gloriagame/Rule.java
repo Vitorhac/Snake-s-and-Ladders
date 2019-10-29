@@ -1,3 +1,5 @@
+package org.underdogs.gloriagame;
+
 public class Rule {
 
     private int newPosition;

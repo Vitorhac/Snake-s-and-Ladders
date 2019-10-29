@@ -1,3 +1,5 @@
+package org.underdogs.gloriagame;
+
 import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.bootcamp.scanners.menu.MenuInputScanner;
 import org.academiadecodigo.bootcamp.scanners.string.PasswordInputScanner;

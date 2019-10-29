@@ -1,3 +1,5 @@
+package org.underdogs.gloriagame;
+
 public class ACIIArt {
 
     static String welcome() {

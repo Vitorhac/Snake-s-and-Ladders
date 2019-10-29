@@ -1,3 +1,5 @@
+package org.underdogs.gloriagame;
+
 public class Messages {
 
     // Initial message
@@ -17,7 +19,7 @@ public class Messages {
             "You have no balance on your ATM card as you have recently made a money transfer to AdC. Go wipe your tears down to house 35!" + "\n";
     public static final String HOUSE_55 = "\n" + "You have reached the supermarket cashier, but Catarina is not working. " +
             "Pay the Lasagna and go to AdC Microwave... stackpile number 44 !" + "\n";
-    public static final String HOUSE_63 = "\n" + "Congrats you won the Game !!!! ...oh wait, Upsss my mistake !!! So close and so far " +
+    public static final String HOUSE_63 = "\n" + "Congrats you won the org.underdogs.gloriagame.Game !!!! ...oh wait, Upsss my mistake !!! So close and so far " +
             "Go to house number 2 !!! bye bye." + "\n";
 
     // Go up messages
