@@ -17,11 +17,9 @@ public class Game {
     private final int WIN_CONDITION = 64;
     private List<Player> playersList;
     private ServerSocket serverSocket;
-    private Player player;
     private BufferedReader in;
     private ACIIArt art;
     private int port;
-    private volatile boolean turn;
     private Map<Integer, Rule> gameRules;
     private int maxPlayers;
     private int minPlayers;
@@ -31,13 +29,12 @@ public class Game {
 
         this.port = port;
         this.playersList = new ArrayList<>();
-        this.turn = false;
         this.gameRules = new HashMap<>();
         this.art = new ACIIArt();
         this.maxPlayers = maxPlayers;
         this.minPlayers = 0;
 
-        gameRules.put(5, new Rule(20, Messages.HOUSE_5));
+        gameRules.put(5, new Rule(22, Messages.HOUSE_5));
         gameRules.put(14, new Rule(31, Messages.HOUSE_14));
         gameRules.put(27, new Rule(37, Messages.HOUSE_27));
         gameRules.put(45, new Rule(53, Messages.HOUSE_45));
@@ -46,11 +43,10 @@ public class Game {
         gameRules.put(25, new Rule(9, Messages.HOUSE_25));
         gameRules.put(34, new Rule(20, Messages.HOUSE_34));
         gameRules.put(42, new Rule(28, Messages.HOUSE_42));
-        gameRules.put(51, new Rule(45, Messages.HOUSE_51));
+        gameRules.put(51, new Rule(35, Messages.HOUSE_51));
         gameRules.put(55, new Rule(44, Messages.HOUSE_55));
         gameRules.put(63, new Rule(2, Messages.HOUSE_63));
     }
-
 
     public void listen() {
         System.out.println("======================== Server initiated ========================\n");
@@ -135,11 +131,6 @@ public class Game {
         }
     }
 
-    public synchronized void turnChange() {
-        this.turn = true;
-        notifyAll();
-    }
-
     public List<Player> getPlayersList() {
         return playersList;
     }
@@ -158,8 +149,6 @@ public class Game {
         for (Map.Entry<Integer, Rule> entry : gameRules.entrySet()) {
             if (entry.getKey() == position) {
                 send(player,"\n" + entry.getValue().getMessage() + "\n");
-                //broadcast(player, entry.getValue().getMessage());
-                //System.out.println("You hit a special place on Earth. Your new position is " + entry.getValue().getNewPosition());
                 return entry.getValue().getNewPosition();
             }
         }
@@ -182,6 +171,5 @@ public class Game {
             endGame = true;
         }
     }
-
 }
 
